@@ -7,8 +7,20 @@
     <script defer type="module" src="./src/script/main.js"></script>
     <link rel="stylesheet" href="./src/css/style.css">
 </head>
-<body id="body">
-    <input type="text" id="titulo">
-    <button type="submit" id="enviar">Enviar</button>
+<body>
+    <header>
+        <h1><span aria-hidden="true">🎬</span> Welcome to <strong>MovieFlix</strong></h1>
+    </header>
+
+    <main>
+        <input type="search" id="titulo"
+               placeholder="Busca una película…"
+               aria-label="Buscar una película">
+
+        <section id="resultados" aria-label="Resultados de búsqueda"></section>
+    </main>
+
+    <footer>
+        <p>Done by © ProfitCoder</p>
+    </footer>
 </body>
-</html>

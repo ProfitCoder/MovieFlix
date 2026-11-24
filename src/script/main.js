@@ -5,11 +5,11 @@
 
 import { api } from "./Api.js";
 
-const principal = document.getElementById("body");
-const buscado = document.getElementById("enviar");
+const principal = document.getElementById("resultados");
 const titulo = document.getElementById("titulo");
+const imgReserva = '../img/Posternodisponible.png';
 
-buscado.addEventListener("click",buscarPeli);
+titulo.addEventListener("input",buscarPeli);
 
 function buscarPeli()
 {
@@ -18,6 +18,7 @@ function buscarPeli()
     .then(
         data => {
 
+            //Done for cleaning the historial
             const tarjetas = principal.querySelectorAll("div");
 
             for (const tarjeta of tarjetas) {
@@ -32,10 +33,18 @@ function buscarPeli()
                 const p1 = document.createElement("p");
                 const p2 = document.createElement("img");
 
-                
                 p.textContent = movies.Title;
                 p1.textContent = movies.Year;
-                p2.src = movies.Poster;
+
+                if(movies.Poster != null)
+                {
+                    p2.src = movies.Poster;
+                }
+                else
+                {
+                    p2.src = imgReserva;
+                }
+                
 
                 divNow.appendChild(p2);
                 divNow.appendChild(p);
