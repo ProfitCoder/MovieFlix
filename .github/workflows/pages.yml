@@ -1,0 +1,38 @@
+name: Publicar MovieFlix
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Preparar MovieFlix
+        env:
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+        run: |
+          test -n "$OMDB_API_KEY" || { echo "Falta OMDB_API_KEY"; exit 1; }
+          mkdir -p _site
+          cp -r index.html src _site/
+          printf 'export const api = "https://www.omdbapi.com/?apikey=%s";\n' \
+            "$OMDB_API_KEY" > _site/src/script/Api.js
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - uses: actions/deploy-pages@v4
+        id: deployment
