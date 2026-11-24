@@ -7,7 +7,7 @@ import { api } from "./Api.js";
 
 const principal = document.getElementById("resultados");
 const titulo = document.getElementById("titulo");
-const imgReserva = '../img/Posternodisponible.png';
+const imgReserva = "./src/img/Posternodisponible.png";
 
 titulo.addEventListener("input",buscarPeli);
 
@@ -36,7 +36,7 @@ function buscarPeli()
                 p.textContent = movies.Title;
                 p1.textContent = movies.Year;
 
-                if(movies.Poster != null)
+                if(movies.Poster != "N/A")
                 {
                     p2.src = movies.Poster;
                 }
