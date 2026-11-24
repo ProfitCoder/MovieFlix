@@ -6,29 +6,43 @@
 import { api } from "./Api.js";
 
 const principal = document.getElementById("body");
+const buscado = document.getElementById("enviar");
+const titulo = document.getElementById("titulo");
 
-fetch(api + "&s=spider")
-  .then(response => response.json())
-  .then(
-    data => {
-        for(const movies of data.Search)
-        {
-            const divNow = document.createElement("div");
+buscado.addEventListener("click",buscarPeli);
 
-            const p = document.createElement("p");
-            const p1 = document.createElement("p");
-            const p2 = document.createElement("img");
+function buscarPeli()
+{
+    fetch(api + `&s=${titulo.value}`)
+    .then(response => response.json())
+    .then(
+        data => {
 
-            
-            p.textContent = movies.Title;
-            p1.textContent = movies.Year;
-            p2.src = movies.Poster;
+            const tarjetas = principal.querySelectorAll("div");
 
-            divNow.appendChild(p2);
-            divNow.appendChild(p);
-            divNow.appendChild(p1);
+            for (const tarjeta of tarjetas) {
+                tarjeta.remove();
+            }
 
-            principal.appendChild(divNow);
+            for(const movies of data.Search)
+            {
+                const divNow = document.createElement("div");
+
+                const p = document.createElement("p");
+                const p1 = document.createElement("p");
+                const p2 = document.createElement("img");
+
+                
+                p.textContent = movies.Title;
+                p1.textContent = movies.Year;
+                p2.src = movies.Poster;
+
+                divNow.appendChild(p2);
+                divNow.appendChild(p);
+                divNow.appendChild(p1);
+
+                principal.appendChild(divNow);
+            }
         }
-    }
-);
+    );
+}
